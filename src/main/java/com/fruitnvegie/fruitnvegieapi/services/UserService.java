@@ -1,5 +1,7 @@
 package com.fruitnvegie.fruitnvegieapi.services;
 
+import com.fruitnvegie.fruitnvegieapi.models.User;
+
 import java.util.List;
 
 public interface UserService {

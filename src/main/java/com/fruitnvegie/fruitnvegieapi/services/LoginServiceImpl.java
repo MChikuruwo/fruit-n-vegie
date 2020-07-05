@@ -1,6 +1,8 @@
 package com.fruitnvegie.fruitnvegieapi.services;
 
 import com.fruitnvegie.fruitnvegieapi.dao.LoginRepository;
+import com.fruitnvegie.fruitnvegieapi.models.Login;
+import com.fruitnvegie.fruitnvegieapi.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

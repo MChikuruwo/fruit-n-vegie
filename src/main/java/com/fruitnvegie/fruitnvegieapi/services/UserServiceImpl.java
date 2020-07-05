@@ -4,6 +4,7 @@ import com.fruitnvegie.fruitnvegieapi.dao.RoleRepository;
 import com.fruitnvegie.fruitnvegieapi.dao.UserRepository;
 import com.fruitnvegie.fruitnvegieapi.exceptions.UserNotFoundException;
 import com.fruitnvegie.fruitnvegieapi.models.MyUserPrincipal;
+import com.fruitnvegie.fruitnvegieapi.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;

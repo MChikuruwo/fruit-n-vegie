@@ -1,6 +1,7 @@
 package com.fruitnvegie.fruitnvegieapi.services;
 
 import com.fruitnvegie.fruitnvegieapi.dao.RoleRepository;
+import com.fruitnvegie.fruitnvegieapi.models.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
