@@ -1,5 +1,7 @@
 package com.fruitnvegie.fruitnvegieapi.dao;
 
+import com.fruitnvegie.fruitnvegieapi.models.DeliveryMethods;
+import com.fruitnvegie.fruitnvegieapi.models.PaymentMethods;
 import com.fruitnvegie.fruitnvegieapi.models.ShippingDetails;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -11,6 +13,6 @@ public interface ShippingDetailsRepository extends JpaRepository<ShippingDetails
     ShippingDetails findByUserId(Integer userId);
     List<ShippingDetails> findAllByCity(String city);
     List<ShippingDetails> findAllByCountry(String country);
-    List<ShippingDetails> findAllByDeliveryMethods(String deliveryMethods);
-    List<ShippingDetails> findAllByPaymentMethods(String paymentMethods);
+    List<ShippingDetails> findAllByDeliveryMethods(DeliveryMethods deliveryMethods);
+    List<ShippingDetails> findAllByPaymentMethods(PaymentMethods paymentMethods);
 }

@@ -2,6 +2,7 @@ package com.fruitnvegie.fruitnvegieapi.services;
 
 import com.fruitnvegie.fruitnvegieapi.dao.RoleRepository;
 import com.fruitnvegie.fruitnvegieapi.dao.UserRepository;
+import com.fruitnvegie.fruitnvegieapi.exceptions.EmailAlreadyExistsException;
 import com.fruitnvegie.fruitnvegieapi.exceptions.UserNotFoundException;
 import com.fruitnvegie.fruitnvegieapi.models.MyUserPrincipal;
 import com.fruitnvegie.fruitnvegieapi.models.User;
@@ -35,8 +36,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public String add(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        Optional<User> emailFromDatabase = Optional.ofNullable(userRepository.findUserByEmailAddress(user.getEmailAddress()));
+        if (emailFromDatabase.isPresent()) throw new EmailAlreadyExistsException("User email Already exist");
         userRepository.save(user);
-        return "User has been registered";
+        return "User has been successfully registered";
     }
 
     @Transactional
@@ -113,7 +116,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         User user = userRepository.findUserByEmailAddress(emailAddress);
         if (user == null){
             //TODO: Set an error that the user by that email address cannot be found
-            throw new UsernameNotFoundException("Could not find the user " + emailAddress);
+            throw new UsernameNotFoundException("Could not find user with email:" + emailAddress);
         }
         return new MyUserPrincipal(user);
     }

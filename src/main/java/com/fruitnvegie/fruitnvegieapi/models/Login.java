@@ -1,5 +1,7 @@
 package com.fruitnvegie.fruitnvegieapi.models;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -22,6 +24,7 @@ public class Login {
     }
 
     @Basic
+    @CreationTimestamp
     @Column(name = "date")
     public Timestamp getDate() {
         return date;

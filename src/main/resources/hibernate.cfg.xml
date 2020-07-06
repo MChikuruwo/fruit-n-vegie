@@ -6,13 +6,13 @@
   <session-factory>
     <property name="connection.url">jdbc:mysql://localhost:3306/fruit_n_veg_shopping_cart</property>
     <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-    <mapping class="com.fruitnvegie.fruitnvegieapi.models.DeliveryMethodsEntity"/>
-      <mapping class="com.fruitnvegie.fruitnvegieapi.models.PaymentMethodsEntity"/>
-      <mapping class="com.fruitnvegie.fruitnvegieapi.models.ShippingDetailsEntity"/>
-      <mapping class="com.fruitnvegie.fruitnvegieapi.models.UserEntity"/>
-      <mapping class="com.fruitnvegie.fruitnvegieapi.models.RoleEntity"/>
-      <mapping class="com.fruitnvegie.fruitnvegieapi.models.UserRoleEntity"/>
-    <mapping class="com.fruitnvegie.fruitnvegieapi.models.LoginEntity"/>
+    <mapping class="com.fruitnvegie.fruitnvegieapi.models.DeliveryMethods"/>
+      <mapping class="com.fruitnvegie.fruitnvegieapi.models.PaymentMethods"/>
+      <mapping class="com.fruitnvegie.fruitnvegieapi.models.ShippingDetails"/>
+      <mapping class="com.fruitnvegie.fruitnvegieapi.models.User"/>
+      <mapping class="com.fruitnvegie.fruitnvegieapi.models.Role"/>
+      <mapping class="com.fruitnvegie.fruitnvegieapi.models.UserRole"/>
+    <mapping class="com.fruitnvegie.fruitnvegieapi.models.Login"/>
     <!-- <property name="connection.username"/> -->
     <!-- <property name="connection.password"/> -->
 

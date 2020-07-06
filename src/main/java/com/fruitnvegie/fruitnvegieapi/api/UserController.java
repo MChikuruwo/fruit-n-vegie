@@ -99,9 +99,9 @@ public class UserController {
         SimpleMailMessage registrationEmail = new SimpleMailMessage();
         registrationEmail.setTo(user.getEmailAddress());
         registrationEmail.setSubject("fruit'n'vegie Email-Confirmation");
-        registrationEmail.setText(" Dear " + roleService.getOne(roleId).getName() + user.getName() + ", \n You have successfully signed up as a member of fruit'n'vegie confirm if this is your email and proceed to Login with the credentials below:" +
+        registrationEmail.setText(" Dear " + user.getName() + ", \n You have successfully signed up as a " + roleService.getOne(roleId).getName() + " of fruit'n'vegie confirm if this is your email and proceed to Login with the credentials below:" +
                 "\n Email: " + user.getEmailAddress() +"\n Password: " + password +
-                ". \n Please keep your password safe and we recommend you reset it every now and then security purposes.\n" +
+                "\n Keep your password safe and we recommend you reset it every now and then security purposes.\n" +
                 " Please note that no one from fruit'n' vegie will call you or e-mail you requesting your password.");
         registrationEmail.setFrom("mchikuruwo@hotmail.com");
 

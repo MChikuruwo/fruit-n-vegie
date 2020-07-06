@@ -1,6 +1,8 @@
 package com.fruitnvegie.fruitnvegieapi.services;
 
 import com.fruitnvegie.fruitnvegieapi.dao.ShippingDetailsRepository;
+import com.fruitnvegie.fruitnvegieapi.models.DeliveryMethods;
+import com.fruitnvegie.fruitnvegieapi.models.PaymentMethods;
 import com.fruitnvegie.fruitnvegieapi.models.ShippingDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -72,7 +74,7 @@ public class ShippingDetailsServiceImpl implements ShippingDetailsService{
     public ShippingDetails findByUserId(Integer userId) {
         ShippingDetails shippingDetails = shippingDetailsRepository.findByUserId(userId);
         if (shippingDetails == null){
-            throw new EntityNotFoundException("Shipping Details of user id " + userId + " not found.");
+            throw new EntityNotFoundException("Shipping Details of user with id: " + userId + " not found.");
         }
         return shippingDetails;
     }
@@ -81,7 +83,7 @@ public class ShippingDetailsServiceImpl implements ShippingDetailsService{
     public List<ShippingDetails> findAllByCity(String city) {
         List<ShippingDetails> shippingDetails = shippingDetailsRepository.findAllByCity(city);
         if (shippingDetails.isEmpty()){
-            throw new EntityNotFoundException("Shipping Details with city " + city + "not found.");
+            throw new EntityNotFoundException("Shipping is not available in  " + city + "yet.");
         }
         return shippingDetails;
     }
@@ -90,25 +92,25 @@ public class ShippingDetailsServiceImpl implements ShippingDetailsService{
    public  List<ShippingDetails> findAllByCountry(String country) {
         List<ShippingDetails> shippingDetails = shippingDetailsRepository.findAllByCountry(country);
         if (shippingDetails.isEmpty()){
-            throw new EntityNotFoundException("Shipping Details from country " + country + "not found.");
+            throw new EntityNotFoundException("Shipping is not available in " + country + "yet.");
         }
         return shippingDetails;
     }
 
     @Override
-    public List<ShippingDetails> findAllByDeliveryMethods(String deliveryMethods) {
+    public List<ShippingDetails> findAllByDeliveryMethods(DeliveryMethods deliveryMethods) {
         List<ShippingDetails> shippingDetails = shippingDetailsRepository.findAllByDeliveryMethods(deliveryMethods);
         if (shippingDetails.isEmpty()){
-            throw new EntityNotFoundException("Shipping Details with Delivery Method".concat(deliveryMethods).concat(" not found."));
+            throw new EntityNotFoundException("Shipping Details with Delivery Method:".concat(deliveryMethods.getDeliveryMethod()).concat(" not found."));
         }
         return shippingDetails;
     }
 
     @Override
-    public List<ShippingDetails> findAllByPaymentMethods(String paymentMethods) {
+    public List<ShippingDetails> findAllByPaymentMethods(PaymentMethods paymentMethods) {
         List<ShippingDetails> shippingDetails = shippingDetailsRepository.findAllByPaymentMethods(paymentMethods);
         if (shippingDetails.isEmpty()){
-            throw new EntityNotFoundException("Shipping Details with Payment Method ".concat(paymentMethods).concat(" not found."));
+            throw new EntityNotFoundException("Shipping Details with Payment Method ".concat(paymentMethods.getPaymentMethod()).concat(" not found."));
         }
         return shippingDetails;
     }

@@ -1,6 +1,8 @@
 package com.fruitnvegie.fruitnvegieapi.services;
 
 
+import com.fruitnvegie.fruitnvegieapi.models.DeliveryMethods;
+import com.fruitnvegie.fruitnvegieapi.models.PaymentMethods;
 import com.fruitnvegie.fruitnvegieapi.models.ShippingDetails;
 
 import java.util.List;
@@ -16,6 +18,6 @@ public interface ShippingDetailsService {
     ShippingDetails findByUserId(Integer userId);
     List<ShippingDetails> findAllByCity(String city);
     List<ShippingDetails> findAllByCountry(String country);
-    List<ShippingDetails> findAllByDeliveryMethods(String deliveryMethods);
-    List<ShippingDetails> findAllByPaymentMethods(String paymentMethods);
+    List<ShippingDetails> findAllByDeliveryMethods(DeliveryMethods deliveryMethods);
+    List<ShippingDetails> findAllByPaymentMethods(PaymentMethods paymentMethods);
 }

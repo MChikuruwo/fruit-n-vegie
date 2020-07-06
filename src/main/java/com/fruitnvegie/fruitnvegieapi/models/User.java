@@ -24,8 +24,8 @@ public class User {
 
 
     @Id
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     public Integer getId() {
         return id;
     }
@@ -35,7 +35,7 @@ public class User {
     }
 
     @Basic
-    @Column(name = "name")
+    @Column(name = "name", nullable = false, length = 150)
     public String getName() {
         return name;
     }
@@ -45,7 +45,7 @@ public class User {
     }
 
     @Basic
-    @Column(name = "surname")
+    @Column(name = "surname", nullable = false, length = 150)
     public String getSurname() {
         return surname;
     }
@@ -55,7 +55,7 @@ public class User {
     }
 
     @Basic
-    @Column(name = "email_address")
+    @Column(name = "email_address", nullable = false, length = 150)
     public String getEmailAddress() {
         return emailAddress;
     }
@@ -65,7 +65,7 @@ public class User {
     }
 
     @Basic
-    @Column(name = "password")
+    @Column(name = "password", nullable = false, length = 255)
     public String getPassword() {
         return password;
     }
@@ -75,7 +75,7 @@ public class User {
     }
 
     @Basic
-    @Column(name = "is_active")
+    @Column(name = "is_active", nullable = false)
     public Boolean getActive() {
         return isActive;
     }
@@ -86,7 +86,7 @@ public class User {
 
     @Basic
     @CreationTimestamp
-    @Column(name = "date_created")
+    @Column(name = "date_created", nullable = false)
     public Timestamp getDateCreated() {
         return dateCreated;
     }
@@ -97,7 +97,7 @@ public class User {
 
     @Basic
     @UpdateTimestamp
-    @Column(name = "date_updated")
+    @Column(name = "date_updated", nullable = false)
     public Timestamp getDateUpdated() {
         return dateUpdated;
     }
