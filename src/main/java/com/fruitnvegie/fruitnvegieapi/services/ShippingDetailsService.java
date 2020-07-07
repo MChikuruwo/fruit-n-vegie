@@ -15,9 +15,11 @@ public interface ShippingDetailsService {
     List<ShippingDetails> getAll();
     ShippingDetails getOne(Long id);
 
+
     ShippingDetails findByUserId(Integer userId);
+    ShippingDetails findByAvailableCountriesId(Long countryId);
     List<ShippingDetails> findAllByCity(String city);
-    List<ShippingDetails> findAllByCountry(String country);
+    //List<ShippingDetails> findAllByCountry(String country);
     List<ShippingDetails> findAllByDeliveryMethods(DeliveryMethods deliveryMethods);
     List<ShippingDetails> findAllByPaymentMethods(PaymentMethods paymentMethods);
 }

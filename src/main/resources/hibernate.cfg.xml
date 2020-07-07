@@ -13,6 +13,8 @@
       <mapping class="com.fruitnvegie.fruitnvegieapi.models.Role"/>
       <mapping class="com.fruitnvegie.fruitnvegieapi.models.UserRole"/>
     <mapping class="com.fruitnvegie.fruitnvegieapi.models.Login"/>
+      <mapping class="com.fruitnvegie.fruitnvegieapi.models.AvailableCountries"/>
+    <mapping class="com.fruitnvegie.fruitnvegieapi.models.ShippingDetailsEntity"/>
     <!-- <property name="connection.username"/> -->
     <!-- <property name="connection.password"/> -->
 

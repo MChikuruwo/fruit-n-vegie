@@ -1,5 +1,6 @@
 package com.fruitnvegie.fruitnvegieapi.dto;
 
+import com.fruitnvegie.fruitnvegieapi.models.AvailableCountries;
 import com.fruitnvegie.fruitnvegieapi.models.DeliveryMethods;
 import com.fruitnvegie.fruitnvegieapi.models.PaymentMethods;
 import com.fruitnvegie.fruitnvegieapi.models.User;
@@ -13,6 +14,7 @@ public class UpdateShippingDetailsDto {
     private User user;
     private DeliveryMethods deliveryMethods;
     private PaymentMethods paymentMethods;
+    private AvailableCountries availableCountries;
 
     public Long getId() {
         return id;
@@ -76,5 +78,13 @@ public class UpdateShippingDetailsDto {
 
     public void setPaymentMethods(PaymentMethods paymentMethods) {
         this.paymentMethods = paymentMethods;
+    }
+
+    public AvailableCountries getAvailableCountries() {
+        return availableCountries;
+    }
+
+    public void setAvailableCountries(AvailableCountries availableCountries) {
+        this.availableCountries = availableCountries;
     }
 }

@@ -1,5 +1,6 @@
 package com.fruitnvegie.fruitnvegieapi.services;
 
+import com.fruitnvegie.fruitnvegieapi.dao.AvailableCountriesRepository;
 import com.fruitnvegie.fruitnvegieapi.dao.ShippingDetailsRepository;
 import com.fruitnvegie.fruitnvegieapi.models.DeliveryMethods;
 import com.fruitnvegie.fruitnvegieapi.models.PaymentMethods;
@@ -17,10 +18,12 @@ import java.util.Optional;
 public class ShippingDetailsServiceImpl implements ShippingDetailsService{
 
     private final ShippingDetailsRepository shippingDetailsRepository;
+    private final AvailableCountriesRepository availableCountriesRepository;
 
     @Autowired
-    public ShippingDetailsServiceImpl(ShippingDetailsRepository shippingDetailsRepository) {
+    public ShippingDetailsServiceImpl(ShippingDetailsRepository shippingDetailsRepository, AvailableCountriesRepository availableCountriesRepository) {
         this.shippingDetailsRepository = shippingDetailsRepository;
+        this.availableCountriesRepository = availableCountriesRepository;
     }
 
     @Override
@@ -80,6 +83,15 @@ public class ShippingDetailsServiceImpl implements ShippingDetailsService{
     }
 
     @Override
+    public ShippingDetails findByAvailableCountriesId(Long countryId){
+        ShippingDetails shippingDetails = shippingDetailsRepository.findByAvailableCountriesId(countryId);
+        if (shippingDetails == null){
+            throw new EntityNotFoundException("Shipping Details of country: " + countryId.toString() + " not found.");
+        }
+        return shippingDetails;
+    }
+
+    @Override
     public List<ShippingDetails> findAllByCity(String city) {
         List<ShippingDetails> shippingDetails = shippingDetailsRepository.findAllByCity(city);
         if (shippingDetails.isEmpty()){
@@ -88,14 +100,16 @@ public class ShippingDetailsServiceImpl implements ShippingDetailsService{
         return shippingDetails;
     }
 
-    @Override
+   /* @Override
    public  List<ShippingDetails> findAllByCountry(String country) {
-        List<ShippingDetails> shippingDetails = shippingDetailsRepository.findAllByCountry(country);
+        List<ShippingDetails> shippingDetails = (List<ShippingDetails>) availableCountriesRepository.findByCountry(country);
         if (shippingDetails.isEmpty()){
             throw new EntityNotFoundException("Shipping is not available in " + country + "yet.");
         }
         return shippingDetails;
     }
+
+    */
 
     @Override
     public List<ShippingDetails> findAllByDeliveryMethods(DeliveryMethods deliveryMethods) {

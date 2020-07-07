@@ -18,7 +18,7 @@ public class JwtTokenProvider {
     private static final Logger logger = LoggerFactory.getLogger(JwtTokenProvider.class);
 
     private static final long EXPIRATION_TIME = 864_000_000; // 10 days
-    private static final String SECRET = "whu4b239enridfq";
+    private static final String SECRET = "whu4b239enridfqmnh";
     private static final String TOKEN_PREFIX = "Bearer";
     private static final String HEADER_STRING = "Authorization";
 

@@ -1,9 +1,11 @@
 package com.fruitnvegie.fruitnvegieapi.api;
 
+import com.fruitnvegie.fruitnvegieapi.dao.UserRepository;
 import com.fruitnvegie.fruitnvegieapi.dto.AddUserDto;
 import com.fruitnvegie.fruitnvegieapi.dto.GenerateCredentialsDto;
 import com.fruitnvegie.fruitnvegieapi.dto.LoginDto;
 import com.fruitnvegie.fruitnvegieapi.dto.UpdateUserDto;
+import com.fruitnvegie.fruitnvegieapi.exceptions.EmailAlreadyExistsException;
 import com.fruitnvegie.fruitnvegieapi.models.Login;
 import com.fruitnvegie.fruitnvegieapi.models.User;
 import com.fruitnvegie.fruitnvegieapi.models.api.ApiResponse;
@@ -28,6 +30,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
+import java.util.Optional;
 import java.util.Random;
 
 @RestController
@@ -44,16 +47,18 @@ public class UserController {
     private final RoleService roleService;
     private final ModelMapper modelMapper;
     private final EmailService emailService;
+    private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final AuthenticationManager authenticationManager;
 
     @Autowired
-    public UserController(UserService userService, LoginService loginService, RoleService roleService, ModelMapper modelMapper, EmailService emailService, JwtTokenProvider jwtTokenProvider, AuthenticationManager authenticationManager) {
+    public UserController(UserService userService, LoginService loginService, RoleService roleService, ModelMapper modelMapper, EmailService emailService, UserRepository userRepository, JwtTokenProvider jwtTokenProvider, AuthenticationManager authenticationManager) {
         this.userService = userService;
         this.loginService = loginService;
         this.roleService = roleService;
         this.modelMapper = modelMapper;
         this.emailService = emailService;
+        this.userRepository = userRepository;
         this.jwtTokenProvider = jwtTokenProvider;
         this.authenticationManager = authenticationManager;
     }
@@ -104,6 +109,9 @@ public class UserController {
                 "\n Keep your password safe and we recommend you reset it every now and then security purposes.\n" +
                 " Please note that no one from fruit'n' vegie will call you or e-mail you requesting your password.");
         registrationEmail.setFrom("mchikuruwo@hotmail.com");
+   //check if email address exists and if so return error before sending email
+        Optional<User> emailFromDatabase = Optional.ofNullable(userRepository.findUserByEmailAddress(user.getEmailAddress()));
+        if (emailFromDatabase.isPresent()) throw new EmailAlreadyExistsException("User email Already exist");
 
         emailService.sendEmail(registrationEmail);
 

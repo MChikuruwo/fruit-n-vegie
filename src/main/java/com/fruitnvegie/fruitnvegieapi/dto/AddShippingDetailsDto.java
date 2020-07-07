@@ -6,10 +6,8 @@ import com.fruitnvegie.fruitnvegieapi.models.PaymentMethods;
 public class AddShippingDetailsDto {
     private String address;
     private String city;
-    private String country;
     private Long zipPostalCode;
-    private DeliveryMethods deliveryMethods;
-    private PaymentMethods paymentMethods;
+
 
 
     public String getAddress() {
@@ -28,14 +26,6 @@ public class AddShippingDetailsDto {
         this.city = city;
     }
 
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
     public Long getZipPostalCode() {
         return zipPostalCode;
     }
@@ -44,19 +34,5 @@ public class AddShippingDetailsDto {
         this.zipPostalCode = zipPostalCode;
     }
 
-    public DeliveryMethods getDeliveryMethods() {
-        return deliveryMethods;
-    }
 
-    public void setDeliveryMethods(DeliveryMethods deliveryMethods) {
-        this.deliveryMethods = deliveryMethods;
-    }
-
-    public PaymentMethods getPaymentMethods() {
-        return paymentMethods;
-    }
-
-    public void setPaymentMethods(PaymentMethods paymentMethods) {
-        this.paymentMethods = paymentMethods;
-    }
 }

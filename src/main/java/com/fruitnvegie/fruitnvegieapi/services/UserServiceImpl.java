@@ -36,10 +36,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public String add(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        Optional<User> emailFromDatabase = Optional.ofNullable(userRepository.findUserByEmailAddress(user.getEmailAddress()));
-        if (emailFromDatabase.isPresent()) throw new EmailAlreadyExistsException("User email Already exist");
         userRepository.save(user);
-        return "User has been successfully registered";
+        return "User credentials have been successfully sent";
     }
 
     @Transactional
@@ -50,7 +48,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         // Carry date created timestamp
         user.setDateCreated(userFromDatabase.get().getDateCreated());
         userRepository.save(user);
-        return "User with ID " + user.getId() + " has been updated";
+        return "User with ID " + user.getId() + " has been successfully updated";
     }
 
     @Transactional

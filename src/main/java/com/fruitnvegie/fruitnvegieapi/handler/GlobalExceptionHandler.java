@@ -1,9 +1,6 @@
 package com.fruitnvegie.fruitnvegieapi.handler;
 
-import com.fruitnvegie.fruitnvegieapi.exceptions.EmailAlreadyExistsException;
-import com.fruitnvegie.fruitnvegieapi.exceptions.InvalidOldPasswordException;
-import com.fruitnvegie.fruitnvegieapi.exceptions.InvalidTokenException;
-import com.fruitnvegie.fruitnvegieapi.exceptions.UserNotFoundException;
+import com.fruitnvegie.fruitnvegieapi.exceptions.*;
 import com.fruitnvegie.fruitnvegieapi.models.api.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,6 +53,12 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(EmailAlreadyExistsException.class)
     public ApiResponse handleEmailAlreadyExistsException(EmailAlreadyExistsException e) {
+        return new ApiResponse(400, e.getLocalizedMessage());
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(DetailsAlreadyExistsException.class)
+    public ApiResponse handleDetailsAlreadyExistsException(DetailsAlreadyExistsException e) {
         return new ApiResponse(400, e.getLocalizedMessage());
     }
 }
