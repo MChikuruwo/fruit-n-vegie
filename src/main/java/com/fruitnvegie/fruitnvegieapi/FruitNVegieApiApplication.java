@@ -16,7 +16,7 @@ public class FruitNVegieApiApplication {
 	}
 
 	@Bean
-	public PasswordEncoder passwordEncoder(){
+	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 
@@ -27,4 +27,48 @@ public class FruitNVegieApiApplication {
 		return modelMapper;
 	}
 
+
+
+
+	/*@Bean
+	public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws URISyntaxException {
+		LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
+		//entityManagerFactoryBean.setDataSource("fruit_n_vegie_shopping_cart");
+		entityManagerFactoryBean.setPackagesToScan("com.fruitnvegie.fruitnvegieapi.dao");
+		//additional config of factory
+
+		return entityManagerFactoryBean;
+	}
+
+	@Bean(name = "transactionManager")
+	public PlatformTransactionManager jpaTransactionManager(EntityManagerFactory entityManagerFactory) throws URISyntaxException {
+		JpaTransactionManager transactionManager = new JpaTransactionManager();
+		transactionManager.setEntityManagerFactory(entityManagerFactory);
+		return transactionManager;
+	}
+
+
+
+
+	@PersistenceUnit
+	EntityManagerFactory emf;
+
+	@Bean
+	public SessionFactory sessionFactory() {
+		return emf.unwrap(SessionFactory.class);
+	}
+
+
+	 */
+
+
+
+
+
+
+
+
+
+
 }
+

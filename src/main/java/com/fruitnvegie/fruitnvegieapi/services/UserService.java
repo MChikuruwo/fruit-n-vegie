@@ -12,4 +12,5 @@ public interface UserService {
     User getOne(Integer id);
     User authUser(String emailAddress, String password) throws Exception;
     User findByEmailAddress(String emailAddress);
+
 }

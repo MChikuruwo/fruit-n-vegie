@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface ShippingDetailsRepository extends JpaRepository<ShippingDetails,Long> {
-    ShippingDetails findByUserId(Integer userId);
+    ShippingDetails findByCustomerId(Long customerId);
     ShippingDetails findByAvailableCountriesId(Long countryId);
     List<ShippingDetails> findAllByCity(String city);
     //List<ShippingDetails> findAllByCountry(String country);

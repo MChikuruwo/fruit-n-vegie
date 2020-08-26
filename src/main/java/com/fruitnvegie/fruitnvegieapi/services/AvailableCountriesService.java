@@ -11,5 +11,5 @@ public interface AvailableCountriesService {
     String delete(Long id);
     List<AvailableCountries> getAll();
     AvailableCountries getOne(Long id);
-    AvailableCountries findByCountry(String country);
+    AvailableCountries findByCountryName(String countryName);
 }

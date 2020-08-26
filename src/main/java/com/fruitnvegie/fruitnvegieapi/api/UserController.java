@@ -89,13 +89,15 @@ public class UserController {
         // Assign the role of the user
         user.setRoles(Collections.singleton(roleService.getOne(roleId)));
 
+
         // Generate the password for user which needs to be reset
-        String password = generatePassword(user.getName());
+        String password = generatePassword(user.getPassword());
 
         // Set the user password to the generated password
         user.setPassword(password);
 
-        // Set user active true by default
+        // Set user active true by default5486+
+
         user.setActive(true);
 
         // Send a confirmation email message
@@ -104,7 +106,7 @@ public class UserController {
         SimpleMailMessage registrationEmail = new SimpleMailMessage();
         registrationEmail.setTo(user.getEmailAddress());
         registrationEmail.setSubject("fruit'n'vegie Email-Confirmation");
-        registrationEmail.setText(" Dear " + user.getName() + ", \n You have successfully signed up as a " + roleService.getOne(roleId).getName() + " of fruit'n'vegie confirm if this is your email and proceed to Login with the credentials below:" +
+        registrationEmail.setText(" Dear " + roleService.getOne(roleId).getName()  + ", \n You have successfully signed up on the fruit'n'vegie mobile-app platform.\n Kindly confirm if this is your email and proceed to Login with the credentials below:" +
                 "\n Email: " + user.getEmailAddress() +"\n Password: " + password +
                 "\n Keep your password safe and we recommend you reset it every now and then security purposes.\n" +
                 " Please note that no one from fruit'n' vegie will call you or e-mail you requesting your password.");
@@ -122,13 +124,13 @@ public class UserController {
         String generatedPassword;
         // Generate random number to append to user's first name
         Random randomNumber = new Random();
-        int n = 1000 + randomNumber.nextInt(9999);
+        int n = 1000 + randomNumber.nextInt(999999);
         // Concatenate the random number and first name
-        generatedPassword = username.concat(String.valueOf(n));
+        generatedPassword = (String.valueOf(n));
         return generatedPassword;
     }
 
-    @PutMapping(value = "/edit", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/editUser/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Updates a current user's details", produces = MediaType.APPLICATION_JSON_VALUE)
     public ApiResponse updateUser(@RequestBody UpdateUserDto updateUserDto, @PathVariable("id") Integer id){
         User user = modelMapper.map(updateUserDto, User.class);
@@ -171,7 +173,7 @@ public class UserController {
         User user = userService.findByEmailAddress(credentialsDto.getEmailAddress());
 
         // Generate the password for user which needs to be reset
-        String password = generatePassword(user.getName());
+        String password = generatePassword(user.getPassword());
 
         // Set the user password to the generated password
         user.setPassword(password);
@@ -179,7 +181,7 @@ public class UserController {
         SimpleMailMessage generatedCredentialsEmail = new SimpleMailMessage();
         generatedCredentialsEmail.setTo(user.getEmailAddress());
         generatedCredentialsEmail.setSubject("fruit'n'vegie Password-Reset");
-        generatedCredentialsEmail.setText(" Dear " + user.getName() + ", \n You have successfully reset your password confirm if this is you and proceed to Login with the credentials below:" +
+        generatedCredentialsEmail.setText(" Dear user, You have successfully reset your password confirm if this is you and proceed to Login with the credentials below:" +
                 "\n Email: " + user.getEmailAddress() +"\n Password: " + password +
                 ". \n Please keep your password safe and we recommend you reset it every now and then security purposes.\n" +
                 " Please note that no one from fruit'n' vegie will call you or e-mail you requesting your password.");

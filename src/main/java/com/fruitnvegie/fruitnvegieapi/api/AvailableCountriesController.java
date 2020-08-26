@@ -1,14 +1,10 @@
 package com.fruitnvegie.fruitnvegieapi.api;
 
 import com.fruitnvegie.fruitnvegieapi.dto.AddCountriesDto;
-import com.fruitnvegie.fruitnvegieapi.dto.AddDeliveryMethodsDto;
 import com.fruitnvegie.fruitnvegieapi.dto.UpdateCountriesDto;
-import com.fruitnvegie.fruitnvegieapi.dto.UpdateDeliveryMethodsDto;
 import com.fruitnvegie.fruitnvegieapi.models.AvailableCountries;
-import com.fruitnvegie.fruitnvegieapi.models.DeliveryMethods;
 import com.fruitnvegie.fruitnvegieapi.models.api.ApiResponse;
 import com.fruitnvegie.fruitnvegieapi.services.AvailableCountriesService;
-import com.fruitnvegie.fruitnvegieapi.services.DeliveryMethodsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.modelmapper.ModelMapper;
@@ -46,8 +42,8 @@ public class AvailableCountriesController {
 
     @GetMapping("/country-by-name")
     @ApiOperation(value = "Get available country  by its name", response = ApiResponse.class)
-    public ApiResponse getDeliveryMethodByName(@RequestParam("name") String name){
-        return new ApiResponse(200, "SUCCESS", availableCountriesService.findByCountry(name));
+    public ApiResponse getDeliveryMethodByName(@RequestParam("country") String countryName){
+        return new ApiResponse(200, "SUCCESS", availableCountriesService.findByCountryName(countryName));
     }
     @DeleteMapping("/delete/{id}")
     @ApiOperation(value = "Delete a country by its id. Takes id as a path variable", response = ApiResponse.class)

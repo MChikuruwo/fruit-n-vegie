@@ -68,10 +68,10 @@ public class AvailableCountriesServiceImpl implements AvailableCountriesService 
     }
 
     @Override
-    public  AvailableCountries findByCountry(String country){
-        AvailableCountries availableCountries = availableCountriesRepository.findByCountry(country);
+    public  AvailableCountries findByCountryName(String countryName){
+        AvailableCountries availableCountries = availableCountriesRepository.findByCountry(countryName);
         if (availableCountries == null){
-            throw new EntityNotFoundException("Country" + country + " is not yet available.");
+            throw new EntityNotFoundException("Country" + countryName + " is not yet available.");
         }
         return availableCountries;
     }

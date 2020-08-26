@@ -3,7 +3,7 @@ package com.fruitnvegie.fruitnvegieapi.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "available_countries", schema = "fruit_n_veg_shopping_cart")
+@Table(name = "available_countries", schema = "fruit_n_vegie_shopping_cart")
 public class AvailableCountries {
     private Long id;
     private String country;

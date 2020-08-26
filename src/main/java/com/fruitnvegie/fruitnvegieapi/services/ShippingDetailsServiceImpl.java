@@ -74,10 +74,10 @@ public class ShippingDetailsServiceImpl implements ShippingDetailsService{
     }
 
     @Override
-    public ShippingDetails findByUserId(Integer userId) {
-        ShippingDetails shippingDetails = shippingDetailsRepository.findByUserId(userId);
+    public ShippingDetails findByCustomerId(Long customerId) {
+        ShippingDetails shippingDetails = shippingDetailsRepository.findByCustomerId(customerId);
         if (shippingDetails == null){
-            throw new EntityNotFoundException("Shipping Details of user with id: " + userId + " not found.");
+            throw new EntityNotFoundException("Shipping Details of user with id: " + customerId + " not found.");
         }
         return shippingDetails;
     }

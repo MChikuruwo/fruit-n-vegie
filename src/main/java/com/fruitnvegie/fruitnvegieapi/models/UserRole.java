@@ -3,7 +3,7 @@ package com.fruitnvegie.fruitnvegieapi.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "user_role", schema = "fruit_n_veg_shopping_cart")
+@Table(name = "user_role", schema = "fruit_n_vegie_shopping_cart")
 public class UserRole {
     private Integer id;
     private User user;

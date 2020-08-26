@@ -4,9 +4,11 @@
     "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
   <session-factory>
-    <property name="connection.url">jdbc:mysql://localhost:3306/fruit_n_veg_shopping_cart</property>
+    <property name="connection.url">jdbc:mysql://localhost:3306/fruit_n_vegie_shopping_cart</property>
     <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-    <mapping class="com.fruitnvegie.fruitnvegieapi.models.DeliveryMethods"/>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
+    <property name="hibernate.current_session_context_class">thread</property>
+      <mapping class="com.fruitnvegie.fruitnvegieapi.models.DeliveryMethods"/>
       <mapping class="com.fruitnvegie.fruitnvegieapi.models.PaymentMethods"/>
       <mapping class="com.fruitnvegie.fruitnvegieapi.models.ShippingDetails"/>
       <mapping class="com.fruitnvegie.fruitnvegieapi.models.User"/>
@@ -14,8 +16,13 @@
       <mapping class="com.fruitnvegie.fruitnvegieapi.models.UserRole"/>
     <mapping class="com.fruitnvegie.fruitnvegieapi.models.Login"/>
       <mapping class="com.fruitnvegie.fruitnvegieapi.models.AvailableCountries"/>
-    <mapping class="com.fruitnvegie.fruitnvegieapi.models.ShippingDetailsEntity"/>
-    <!-- <property name="connection.username"/> -->
+      <mapping class="com.fruitnvegie.fruitnvegieapi.models.Products"/>
+      <mapping class="com.fruitnvegie.fruitnvegieapi.models.ShoppingCart"/>
+      <mapping class="com.fruitnvegie.fruitnvegieapi.models.CartItem"/>
+      <mapping class="com.fruitnvegie.fruitnvegieapi.models.CustomerOrder"/>
+      <mapping class="com.fruitnvegie.fruitnvegieapi.models.UserCart"/>
+      <mapping class="com.fruitnvegie.fruitnvegieapi.models.Customer"/>
+      <!-- <property name="connection.username"/> -->
     <!-- <property name="connection.password"/> -->
 
     <!-- DB schema will be updated if needed -->

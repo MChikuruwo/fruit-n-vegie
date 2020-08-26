@@ -9,49 +9,30 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "user", schema = "fruit_n_veg_shopping_cart")
+@Table(name = "user", schema = "fruit_n_vegie_shopping_cart")
 public class User {
     private Integer id;
-    private String name;
-    private String surname;
     private String emailAddress;
     private String password;
     private Boolean isActive;
+    private Long customerId;
     private Timestamp dateCreated;
     private Timestamp dateUpdated;
 
     private Set<Role> roles;
 
+    private Set<ShoppingCart> shoppingCarts;
+
 
     @Id
-    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    @Basic
-    @Column(name = "name", nullable = false, length = 150)
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Basic
-    @Column(name = "surname", nullable = false, length = 150)
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
     }
 
     @Basic
@@ -85,6 +66,16 @@ public class User {
     }
 
     @Basic
+    @Column(name = "customer_id", nullable = true)
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
+    }
+
+    @Basic
     @CreationTimestamp
     @Column(name = "date_created", nullable = false)
     public Timestamp getDateCreated() {
@@ -114,8 +105,6 @@ public class User {
         User that = (User) o;
 
         if (!Objects.equals(id, that.id)) return false;
-        if (!Objects.equals(name, that.name)) return false;
-        if (!Objects.equals(surname, that.surname)) return false;
         if (!Objects.equals(emailAddress, that.emailAddress)) return false;
         if (!Objects.equals(password, that.password)) return false;
         if (!Objects.equals(isActive, that.isActive)) return false;
@@ -128,8 +117,6 @@ public class User {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (surname != null ? surname.hashCode() : 0);
         result = 31 * result + (emailAddress != null ? emailAddress.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (isActive != null ? isActive.hashCode() : 0);
@@ -146,5 +133,15 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "user_cart", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "cart_id"))
+    public Set<ShoppingCart> getShoppingCarts() {
+        return shoppingCarts;
+    }
+
+    public void setShoppingCarts(Set<ShoppingCart> shoppingCarts) {
+        this.shoppingCarts = shoppingCarts;
     }
 }

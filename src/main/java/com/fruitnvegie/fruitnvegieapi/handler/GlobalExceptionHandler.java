@@ -61,4 +61,10 @@ public class GlobalExceptionHandler {
     public ApiResponse handleDetailsAlreadyExistsException(DetailsAlreadyExistsException e) {
         return new ApiResponse(400, e.getLocalizedMessage());
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(NotEnoughProductsInStockException.class)
+    public ApiResponse handleNotEnoughProductsInStockException(NotEnoughProductsInStockException e) {
+        return new ApiResponse(400, e.getLocalizedMessage());
+    }
 }

@@ -3,11 +3,11 @@ package com.fruitnvegie.fruitnvegieapi.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "delivery_methods", schema = "fruit_n_veg_shopping_cart")
+@Table(name = "delivery_methods", schema = "fruit_n_vegie_shopping_cart")
 public class DeliveryMethods {
     private Long id;
     private String deliveryMethod;
-    private Long shippingCost;
+    private Double shippingCost;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,11 +32,11 @@ public class DeliveryMethods {
 
     @Basic
     @Column(name = "shipping_cost")
-    public Long getShippingCost() {
+    public Double getShippingCost() {
         return shippingCost;
     }
 
-    public void setShippingCost(Long shippingCost) {
+    public void setShippingCost(Double shippingCost) {
         this.shippingCost = shippingCost;
     }
 

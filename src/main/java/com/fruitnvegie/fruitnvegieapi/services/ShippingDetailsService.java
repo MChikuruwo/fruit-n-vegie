@@ -16,7 +16,7 @@ public interface ShippingDetailsService {
     ShippingDetails getOne(Long id);
 
 
-    ShippingDetails findByUserId(Integer userId);
+    ShippingDetails findByCustomerId(Long customerId);
     ShippingDetails findByAvailableCountriesId(Long countryId);
     List<ShippingDetails> findAllByCity(String city);
     //List<ShippingDetails> findAllByCountry(String country);

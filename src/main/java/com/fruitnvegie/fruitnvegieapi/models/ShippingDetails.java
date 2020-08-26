@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "shipping_details", schema = "fruit_n_veg_shopping_cart")
+@Table(name = "shipping_details", schema = "fruit_n_vegie_shopping_cart")
 public class ShippingDetails {
     private Long id;
     private String address;
@@ -15,7 +15,7 @@ public class ShippingDetails {
     private String zipPostalCode;
     private Timestamp dateCreated;
     private Timestamp dateUpdated;
-    private User user;
+    private Customer customer;
     private AvailableCountries availableCountries;
     private DeliveryMethods deliveryMethods;
     private PaymentMethods paymentMethods;
@@ -112,15 +112,16 @@ public class ShippingDetails {
         return result;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    public User getUser() {
-        return user;
+    @OneToOne
+    @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false)
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
+
 
     @ManyToOne
     @JoinColumn(name = "country_id", referencedColumnName = "id", nullable = false)
@@ -142,7 +143,7 @@ public class ShippingDetails {
     }
 
     @ManyToOne
-    @JoinColumn(name = "payment_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "payment_method_id", referencedColumnName = "id", nullable = false)
     public PaymentMethods getPaymentMethods() {
         return paymentMethods;
     }

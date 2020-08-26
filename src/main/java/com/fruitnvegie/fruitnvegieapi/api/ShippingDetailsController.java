@@ -5,8 +5,6 @@ import com.fruitnvegie.fruitnvegieapi.dao.ShippingDetailsRepository;
 import com.fruitnvegie.fruitnvegieapi.dao.UserRepository;
 import com.fruitnvegie.fruitnvegieapi.dto.AddShippingDetailsDto;
 import com.fruitnvegie.fruitnvegieapi.dto.UpdateShippingDetailsDto;
-import com.fruitnvegie.fruitnvegieapi.exceptions.DetailsAlreadyExistsException;
-import com.fruitnvegie.fruitnvegieapi.exceptions.UserNotFoundException;
 import com.fruitnvegie.fruitnvegieapi.models.*;
 import com.fruitnvegie.fruitnvegieapi.models.api.ApiResponse;
 import com.fruitnvegie.fruitnvegieapi.services.*;
@@ -32,11 +30,11 @@ public class ShippingDetailsController {
     private final AvailableCountriesRepository availableCountriesRepository;
     private final UserRepository userRepository;
     private final ShippingDetailsRepository shippingDetailsRepository;
-    private final UserService userService;
+    private final CustomerService customerService;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public ShippingDetailsController(ShippingDetailsService shippingDetailsService, DeliveryMethodsService deliveryMethodsService, PaymentMethodsService paymentMethodsService,AvailableCountriesService availableCountriesService,AvailableCountriesRepository availableCountriesRepository,UserRepository userRepository, UserService userService,ShippingDetailsRepository shippingDetailsRepository, ModelMapper modelMapper) {
+    public ShippingDetailsController(ShippingDetailsService shippingDetailsService, DeliveryMethodsService deliveryMethodsService, PaymentMethodsService paymentMethodsService,AvailableCountriesService availableCountriesService,AvailableCountriesRepository availableCountriesRepository,UserRepository userRepository, CustomerService customerService,ShippingDetailsRepository shippingDetailsRepository, ModelMapper modelMapper) {
         this.shippingDetailsService = shippingDetailsService;
         this.deliveryMethodsService = deliveryMethodsService;
         this.paymentMethodsService = paymentMethodsService;
@@ -44,7 +42,7 @@ public class ShippingDetailsController {
         this.availableCountriesRepository = availableCountriesRepository;
         this.userRepository = userRepository;
         this.shippingDetailsRepository = shippingDetailsRepository;
-        this.userService = userService;
+        this.customerService = customerService;
         this.modelMapper = modelMapper;
     }
 
@@ -54,10 +52,10 @@ public class ShippingDetailsController {
         return new ApiResponse(200, "SUCCESS", shippingDetailsService.getAll());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{customer-id}")
     @ApiOperation(value = "Get Shipping Details of a user by their id. Takes id as a path variable", response = ApiResponse.class)
-    public ApiResponse getShippingDetailsByUserID(@PathVariable("id") int id){
-        return new ApiResponse(200, "SUCCESS", shippingDetailsService.findByUserId(id));
+    public ApiResponse getShippingDetailsByCustomerID(@PathVariable("customer-id") long id){
+        return new ApiResponse(200, "SUCCESS", shippingDetailsService.findByCustomerId(id));
     }
 
     @DeleteMapping("/delete/{id}")
@@ -100,17 +98,18 @@ public class ShippingDetailsController {
         return new ApiResponse(200, "SUCCESS", shippingDetailsService.findAllByDeliveryMethods(deliveryMethods));
     }
 
-    @PostMapping("/add/{user-id}/{country-id}/{delivery-method-id}/{payment-method-id}")
-    @ApiOperation(value = "Add a new Shipping Details entry for a user. Takes userId, countryId, deliveryMethodId and paymentMethodId as path variables",
+    @PostMapping("/add/{customer-id}/{country-id}/{delivery-method-id}/{payment-method-id}")
+    @ApiOperation(value = "Add a new Shipping Details entry for a user. Takes customerId, countryId, deliveryMethodId and paymentMethodId as path variables",
             response = ApiResponse.class)
     public ApiResponse addNewShippingDetailsEntry(@RequestBody AddShippingDetailsDto shippingDetailsDto,
-                                                  @PathVariable("user-id") Integer userId,
+                                                  @PathVariable("customer-id") Long customerId,
                                                   @PathVariable("country-id") Long countryId,
                                                   @PathVariable("delivery-method-id") Long deliveryMethodId,
                                                   @PathVariable("payment-method-id") Long paymentMethodId){
 
         ShippingDetails shippingDetails = modelMapper.map(shippingDetailsDto, ShippingDetails.class);
-        shippingDetails.setUser(userService.getOne(userId));
+        shippingDetails.setCustomer(customerService.getOne(customerId));
+        Customer customer = customerService.getOne(customerId);
         //if user enters invalid country option
         Optional<AvailableCountries> availableCountries = availableCountriesRepository.findById(countryId);
         if (!availableCountries.isPresent()){
@@ -126,6 +125,7 @@ public class ShippingDetailsController {
         if (userFromDatabase.isPresent() && shippingDetailsFromDatabase.isPresent()) throw new DetailsAlreadyExistsException("User details already exist!");
 
          */
+        customer.setShippingDetails(shippingDetails);
 
         return new ApiResponse(201, "SUCCESS", shippingDetailsService.add(shippingDetails));
     }
@@ -133,7 +133,7 @@ public class ShippingDetailsController {
     @PutMapping("/edit/{country-id}/{delivery-method-id}/{payment-method-id}")
     @ApiOperation(value = "Update an existing Shipping Details entity. Takes countryId, deliveryMethodId and paymentMethodId as path variables",
             response = ApiResponse.class)
-    public ApiResponse updateAnExistingEmployee(@RequestBody UpdateShippingDetailsDto shippingDetailsDto,
+    public ApiResponse updateExistingShippingDetailsEntry(@RequestBody UpdateShippingDetailsDto shippingDetailsDto,
                                                 @PathVariable("country-id") Long countryId,
                                                 @PathVariable("delivery-method-id") Long statusId,
                                                 @PathVariable("payment-method-id") Long titleId){
@@ -146,7 +146,7 @@ public class ShippingDetailsController {
         // Get old record to get the userId
         ShippingDetails oldRecord = shippingDetailsService.getOne(shippingDetails.getId());
 
-        shippingDetails.setUser(oldRecord.getUser());
+        shippingDetails.setCustomer(oldRecord.getCustomer());
         return new ApiResponse(200, "SUCCESS", shippingDetailsService.update(shippingDetails));
     }
 }

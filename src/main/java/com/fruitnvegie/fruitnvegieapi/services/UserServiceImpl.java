@@ -2,7 +2,6 @@ package com.fruitnvegie.fruitnvegieapi.services;
 
 import com.fruitnvegie.fruitnvegieapi.dao.RoleRepository;
 import com.fruitnvegie.fruitnvegieapi.dao.UserRepository;
-import com.fruitnvegie.fruitnvegieapi.exceptions.EmailAlreadyExistsException;
 import com.fruitnvegie.fruitnvegieapi.exceptions.UserNotFoundException;
 import com.fruitnvegie.fruitnvegieapi.models.MyUserPrincipal;
 import com.fruitnvegie.fruitnvegieapi.models.User;
@@ -102,10 +101,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public User findByEmailAddress(String emailAddress) {
         User user = userRepository.findUserByEmailAddress(emailAddress);
         if (user == null){
-            throw new EntityNotFoundException("User with the email " + emailAddress + " not found");
+            throw new EntityNotFoundException("User with the email: " + emailAddress + " not found!");
         }
         return user;
     }
+
 
 
     @Transactional
