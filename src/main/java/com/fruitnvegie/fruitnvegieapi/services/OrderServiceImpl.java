@@ -25,6 +25,8 @@ public class OrderServiceImpl implements OrderService {
 
     }
     public String addCustomerOrder(CustomerOrder customerOrder) {
+       // Optional<CustomerOrder> detailsFromDatabase = Optional.ofNullable(customerOrderDao.findByShoppingCart(customerOrder.getShoppingCart().getId()));
+       // if (detailsFromDatabase.isPresent())throw new OrderAlreadyProcessedException("Order has been already processed, please kindly check your e-mail.");
         customerOrderDao.save(customerOrder);
         return "Customer Order has been successfully processed";
 
@@ -37,7 +39,7 @@ public class OrderServiceImpl implements OrderService {
         ShoppingCart cart = cartDao.getCartById(cartId);
 
         for(CartItem c: cart.getCartItems()){
-            grandTotal = grandTotal + c.getSubTotal();
+            grandTotal += c.getSubTotal();
         }
 
         return grandTotal;

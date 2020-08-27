@@ -83,7 +83,7 @@ public class UserController {
 
     @PostMapping(value = "/signUp/{role-id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "signUp a user to the fruit'n'vegie platform", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ApiResponse addUser(@RequestBody AddUserDto addUserDto, @PathVariable("role-id") Integer roleId, HttpServletRequest request){
+    public ApiResponse addUser(@RequestBody AddUserDto addUserDto, @PathVariable("role-id") Integer roleId, HttpServletRequest request) throws EmailAlreadyExistsException {
         User user = modelMapper.map(addUserDto, User.class);
 
         // Assign the role of the user
@@ -96,7 +96,7 @@ public class UserController {
         // Set the user password to the generated password
         user.setPassword(password);
 
-        // Set user active true by default5486+
+        // Set user active true by default
 
         user.setActive(true);
 
@@ -106,18 +106,20 @@ public class UserController {
         SimpleMailMessage registrationEmail = new SimpleMailMessage();
         registrationEmail.setTo(user.getEmailAddress());
         registrationEmail.setSubject("fruit'n'vegie Email-Confirmation");
-        registrationEmail.setText(" Dear " + roleService.getOne(roleId).getName()  + ", \n You have successfully signed up on the fruit'n'vegie mobile-app platform.\n Kindly confirm if this is your email and proceed to Login with the credentials below:" +
+        registrationEmail.setText(" Dear " + roleService.getOne(roleId).getName()  +
+                ", \n You have successfully signed up on the fruit'n'vegie mobile-app platform." +
+                "\n Kindly confirm if this is your email and proceed to Login with the credentials below:" +
                 "\n Email: " + user.getEmailAddress() +"\n Password: " + password +
                 "\n Keep your password safe and we recommend you reset it every now and then security purposes.\n" +
                 " Please note that no one from fruit'n' vegie will call you or e-mail you requesting your password.");
         registrationEmail.setFrom("mchikuruwo@hotmail.com");
    //check if email address exists and if so return error before sending email
         Optional<User> emailFromDatabase = Optional.ofNullable(userRepository.findUserByEmailAddress(user.getEmailAddress()));
-        if (emailFromDatabase.isPresent()) throw new EmailAlreadyExistsException("User email Already exist");
+        if (emailFromDatabase.isPresent()) throw new EmailAlreadyExistsException("Email Already in use, please try another one or recheck if you have typed correctly.");
 
         emailService.sendEmail(registrationEmail);
 
-        return new ApiResponse(201,  "SUCCESS", userService.add(user));
+        return new ApiResponse(200,  "SUCCESS", userService.add(user));
     }
 
     private String generatePassword(String username) {

@@ -51,8 +51,8 @@ public class GlobalExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(EmailAlreadyExistsException.class)
-    public ApiResponse handleEmailAlreadyExistsException(EmailAlreadyExistsException e) {
+    @ExceptionHandler(PhoneNumberAlreadyExistsException.class)
+    public ApiResponse handlePhoneNumberExistsException(PhoneNumberAlreadyExistsException e) {
         return new ApiResponse(400, e.getLocalizedMessage());
     }
 
@@ -65,6 +65,18 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(NotEnoughProductsInStockException.class)
     public ApiResponse handleNotEnoughProductsInStockException(NotEnoughProductsInStockException e) {
+        return new ApiResponse(400, e.getLocalizedMessage());
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(EmailAlreadyExistsException.class)
+    public ApiResponse handleEmailAlreadyExistsException(EmailAlreadyExistsException e) {
+        return new ApiResponse(400, e.getLocalizedMessage());
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(OrderAlreadyProcessedException.class)
+    public ApiResponse handleOrderAlreadyProcessedException(OrderAlreadyProcessedException e) {
         return new ApiResponse(400, e.getLocalizedMessage());
     }
 }

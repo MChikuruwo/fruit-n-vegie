@@ -1,6 +1,7 @@
 package com.fruitnvegie.fruitnvegieapi.services;
 
 import com.fruitnvegie.fruitnvegieapi.dao.CustomerRepository;
+import com.fruitnvegie.fruitnvegieapi.exceptions.PhoneNumberAlreadyExistsException;
 import com.fruitnvegie.fruitnvegieapi.exceptions.UserNotFoundException;
 import com.fruitnvegie.fruitnvegieapi.models.Customer;
 import com.fruitnvegie.fruitnvegieapi.models.User;
@@ -32,6 +33,8 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public String add(Customer customer) {
+        Optional<Customer> detailsFromDatabase = Optional.ofNullable(customerRepository.findByPhoneNumber(customer.getPhoneNumber()));
+        if (detailsFromDatabase.isPresent())throw new PhoneNumberAlreadyExistsException("Phone Number already in use, please try another one.");
         customerRepository.save(customer);
         return "Customer details have been successfully updated.";
 

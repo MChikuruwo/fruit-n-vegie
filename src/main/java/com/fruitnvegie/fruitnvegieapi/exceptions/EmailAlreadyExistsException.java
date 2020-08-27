@@ -1,6 +1,6 @@
 package com.fruitnvegie.fruitnvegieapi.exceptions;
 
-public class EmailAlreadyExistsException extends RuntimeException {
+public class EmailAlreadyExistsException extends Exception {
 
     public EmailAlreadyExistsException() {
         super();
@@ -17,4 +17,5 @@ public class EmailAlreadyExistsException extends RuntimeException {
     public EmailAlreadyExistsException(Throwable cause) {
         super(cause);
     }
+
 }

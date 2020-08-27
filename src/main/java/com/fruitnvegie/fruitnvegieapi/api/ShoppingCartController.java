@@ -46,16 +46,9 @@ public class ShoppingCartController {
         cart.setCustomer(customerService.getOne(customerId));
 
         cart.setConfirmed(true);
-        //cart.setCustomer(customer);
 
-        //long cartId = customer.getShoppingCart().getId();
 
          customer.setShoppingCart(cart);
-
-         //double grandTotal = customerOrderService.getCustomerOrderGrandTotal(customer.getShoppingCart().getId());
-
-       //cart.setSubTotal(grandTotal);
-
 
         return new ApiResponse(200,"SUCCESS",shoppingCartService.addCart(cart));
     }
@@ -64,7 +57,7 @@ public class ShoppingCartController {
     @ApiOperation(value = "Redirect cart.", produces = MediaType.APPLICATION_JSON_VALUE)
     public String getCartRedirect(@PathVariable(value="cartId") long cartId, Model model){
         model.addAttribute("cartId", cartId);
-
+    //TODO: add cart checkout logic
         return "cart";
 
     }

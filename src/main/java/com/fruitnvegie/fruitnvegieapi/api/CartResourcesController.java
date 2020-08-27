@@ -3,6 +3,7 @@ package com.fruitnvegie.fruitnvegieapi.api;
 import com.fruitnvegie.fruitnvegieapi.dao.CustomerRepository;
 import com.fruitnvegie.fruitnvegieapi.dto.AddCartItemsDto;
 import com.fruitnvegie.fruitnvegieapi.models.CartItem;
+import com.fruitnvegie.fruitnvegieapi.models.Customer;
 import com.fruitnvegie.fruitnvegieapi.models.Products;
 import com.fruitnvegie.fruitnvegieapi.models.ShoppingCart;
 import com.fruitnvegie.fruitnvegieapi.models.api.ApiResponse;
@@ -52,16 +53,17 @@ import java.util.List;
         return cartService.getCartById(cartId);
     }
 
-    @PutMapping(value = "/addItems/{cart-id}/{product-id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/addItems/{customer-id}/{product-id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Add items to a selected cart, taking cartId & productId as path variable.", produces = MediaType.APPLICATION_JSON_VALUE)
     //@ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public ApiResponse addItem(@PathVariable(value = "cart-id") long cartId,
+    public ApiResponse addItem(@PathVariable(value = "customer-id") long customerId,
                                @PathVariable(value = "product-id") long productId,
                                @RequestBody AddCartItemsDto addCartItemsDto) {
 
         CartItem item = modelMapper.map(addCartItemsDto, CartItem.class);
-        item.setShoppingCart(cartService.getCartById(cartId));
-        ShoppingCart cart = cartService.getCartById(cartId);
+        Customer customer = customerDao.getOne(customerId);
+        ShoppingCart cart = customer.getShoppingCart();
+        item.setShoppingCart(cart);
         Products product = productService.getOne(productId);
 
 
@@ -72,10 +74,11 @@ import java.util.List;
                 cartItem.setQuantity(item.getQuantity());
                 cartItem.setProductPrice(product.getProductPrice());
                 cartItem.setSubTotal(product.getProductPrice() * cartItem.getQuantity());
+                //TODO: Add product Size selection option
                 //cartItem.setProductSize(item.getProductSize());
 
                 //set shopping cart sub total
-                cart.setSubTotal(orderService.getCustomerOrderGrandTotal(cartId));
+                cart.setSubTotal(orderService.getCustomerOrderGrandTotal(cart.getId()));
 
                 return new ApiResponse(200, "SUCCESS", cartItemService.add(cartItem));
             }
@@ -87,9 +90,7 @@ import java.util.List;
             cartItem.setProductPrice(product.getProductPrice());
             cartItem.setSubTotal(product.getProductPrice() * cartItem.getQuantity());
             //cartItem.setProductSize(item.getProductSize());
-
-           //set shopping cart sub total
-           cart.setSubTotal(orderService.getCustomerOrderGrandTotal(cartId));
+            cartItem.setShoppingCart(cart);
 
         return new ApiResponse(200, "SUCCESS", cartItemService.add(cartItem));
     }
