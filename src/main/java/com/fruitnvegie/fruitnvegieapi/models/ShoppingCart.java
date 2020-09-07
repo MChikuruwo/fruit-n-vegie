@@ -100,6 +100,13 @@ public class ShoppingCart implements Serializable {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "ShoppingCart{" +
+                "cartItems=" + cartItems +
+                '}';
+    }
+
     @OneToOne
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     @JsonIgnore

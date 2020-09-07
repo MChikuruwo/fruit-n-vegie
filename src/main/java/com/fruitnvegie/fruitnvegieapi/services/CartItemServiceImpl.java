@@ -26,6 +26,7 @@ public class CartItemServiceImpl implements CartItemService {
 
     @Override
     public String add(CartItem cartItem) {
+
         cartItemDao.save(cartItem);
         return "Item has been successfully added.";
     }
@@ -73,4 +74,13 @@ public class CartItemServiceImpl implements CartItemService {
         }
         return "Cart Items have been successfully deleted";
     }
+
+    @Override
+    public CartItem getAllItemsInCart(long cartId) {
+        Optional<CartItem> productsInCart = Optional.ofNullable(cartItemDao.findByShoppingCart(cartId));
+        if (!productsInCart.isPresent()){
+            throw new EntityNotFoundException("Items in cart with Id :" + cartId + " not found!");
+        }
+        return  cartItemDao.findAllByShoppingCart(cartId);}
+
 }

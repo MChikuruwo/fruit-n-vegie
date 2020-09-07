@@ -80,6 +80,9 @@ import java.util.List;
                 //set shopping cart sub total
                 cart.setSubTotal(orderService.getCustomerOrderGrandTotal(cart.getId()));
 
+                //update quantity from products
+                //product.setQuantity(product.getQuantity()-cartItem.getQuantity());
+
                 return new ApiResponse(200, "SUCCESS", cartItemService.add(cartItem));
             }
         }

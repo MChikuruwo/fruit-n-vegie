@@ -12,4 +12,5 @@ public interface CartItemService {
     List<CartItem> getAll();
     CartItem findByProductId(Long productId);
     String removeAllCartItems(ShoppingCart shoppingCart);
+    CartItem getAllItemsInCart(long cartId);
 }

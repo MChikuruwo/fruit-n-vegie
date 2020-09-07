@@ -59,15 +59,16 @@ public class CustomerController {
         Customer customer = modelMapper.map(addCustomerDto, Customer.class);
         customer.setUser(userService.getOne(userId));
         User user = userService.getOne(userId);
-        user.setCustomerId(customer.getId());
         //set active to true by default
         customer.setActive(true);
 
         //fields to be collected from current user
         customer.setPassword(user.getPassword());
         customer.setContactEmail(user.getEmailAddress());
-        //customer.getShippingDetails().setCustomer(customer);
-        //configure customer to get active cart
+
+        //set customerId to a new user
+        user.setCustomerId(customer.getId());
+
         ShoppingCart newCart = new ShoppingCart();
         newCart.setCustomer(customer);
 

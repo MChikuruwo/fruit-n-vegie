@@ -10,6 +10,6 @@ public interface ProductsService {
     String delete(Long id);
     List<Products> getAllProducts();
     Products getOne(long id);
-    Products findByProductName(String name);
+    Products findByName(String productName);
 
 }

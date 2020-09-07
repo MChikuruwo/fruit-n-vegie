@@ -40,9 +40,9 @@ public class AvailableCountriesController {
 
     }
 
-    @GetMapping("/country-by-name")
+    @GetMapping("/byName")
     @ApiOperation(value = "Get available country  by its name", response = ApiResponse.class)
-    public ApiResponse getDeliveryMethodByName(@RequestParam("country") String countryName){
+    public ApiResponse getDeliveryMethodByName(@RequestParam(value="country") String countryName){
         return new ApiResponse(200, "SUCCESS", availableCountriesService.findByCountryName(countryName));
     }
     @DeleteMapping("/delete/{id}")

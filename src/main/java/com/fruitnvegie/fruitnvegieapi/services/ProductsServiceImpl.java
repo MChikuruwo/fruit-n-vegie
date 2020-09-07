@@ -59,10 +59,10 @@ public class ProductsServiceImpl implements ProductsService {
 
 
     @Override
-    public  Products findByProductName(String name){
-        Products products = productsRepository.findByProductName(name);
+    public  Products findByName(String productName){
+        Products products = productsRepository.findByProductName(productName);
         if (products == null){
-            throw new EntityNotFoundException("Product " + name + " is not  available.");
+            throw new EntityNotFoundException("Product " + productName + " is not  available.");
         }
         return products;
     }

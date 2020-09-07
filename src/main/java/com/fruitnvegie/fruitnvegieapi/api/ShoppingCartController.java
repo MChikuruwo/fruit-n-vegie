@@ -13,7 +13,6 @@ import io.swagger.annotations.ApiOperation;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -53,12 +52,13 @@ public class ShoppingCartController {
         return new ApiResponse(200,"SUCCESS",shoppingCartService.addCart(cart));
     }
 
-    @RequestMapping(value = "/{cartId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/checkout/{cartId}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Redirect cart.", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String getCartRedirect(@PathVariable(value="cartId") long cartId, Model model){
-        model.addAttribute("cartId", cartId);
+    public ApiResponse getCartCheckOut(@PathVariable(value="cartId") long cartId){
+        ShoppingCart cart = shoppingCartService.getCartById(cartId);
+       cart.getCustomer().getShippingDetails();
     //TODO: add cart checkout logic
-        return "cart";
+        return new ApiResponse(200,"SUCCESS",cart);
 
     }
 }

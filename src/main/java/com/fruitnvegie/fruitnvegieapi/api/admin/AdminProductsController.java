@@ -1,6 +1,6 @@
-package com.fruitnvegie.fruitnvegieapi.api;
+package com.fruitnvegie.fruitnvegieapi.api.admin;
 
-import com.fruitnvegie.fruitnvegieapi.models.api.ApiResponse;
+/*import com.fruitnvegie.fruitnvegieapi.models.api.ApiResponse;
 import com.fruitnvegie.fruitnvegieapi.services.ProductsService;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.io.IOUtils;
@@ -12,13 +12,13 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @RestController
-@RequestMapping("api/v1/products")
-public class ProductsController {
+@RequestMapping("api/products")
+public class AdminProductsController {
 
     private final ProductsService productsService;
 
     @Autowired
-    public ProductsController(ProductsService productsService){
+    public AdminProductsController(ProductsService productsService){
         this.productsService = productsService;
     }
 
@@ -37,13 +37,15 @@ public class ProductsController {
     }
     @GetMapping("/product-by-name")
     @ApiOperation(value = "Get available product by its name", response = ApiResponse.class)
-    public ApiResponse getProductByName(@RequestParam("productName") String productName){
-        return new ApiResponse(200, "SUCCESS", productsService.findByName(productName));
+    public ApiResponse getProductByName(@RequestParam(value = "productName") String name){
+        return new ApiResponse(200, "SUCCESS", productsService.findByProductName(name));
     }
 
-    @GetMapping( value = "/getImage/{img_name}",produces = MediaType.IMAGE_JPEG_VALUE)
+    @GetMapping( value = "/getimage/{img_name}",produces = MediaType.IMAGE_JPEG_VALUE)
     public @ResponseBody byte[] getImageWithMediaType(@PathVariable("img_name") String img_name) throws IOException {
         InputStream in = getClass().getResourceAsStream("/images/"+img_name);
         return IOUtils.toByteArray(in);
     }
 }
+
+ */

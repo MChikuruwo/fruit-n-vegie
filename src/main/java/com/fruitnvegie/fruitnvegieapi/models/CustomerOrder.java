@@ -82,6 +82,19 @@ public class CustomerOrder {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "CustomerOrder{" +
+                "id=" + id +
+                ", orderNum='" + orderNum + '\'' +
+                ", total=" + total +
+                ", dateOrdered=" + dateOrdered +
+                ", customer=" + customer +
+                ", shoppingCart=" + shoppingCart +
+                ", shippingDetails=" + shippingDetails +
+                '}';
+    }
+
     @OneToOne
     @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false)
     public Customer getCustomer() {
